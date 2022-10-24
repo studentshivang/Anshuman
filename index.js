@@ -4,12 +4,10 @@ const app = express();
 
 dbconnection();
 
-//Router
-app.use('/user','./routers/userRouter');
+app.use(express.json());
 
-app.post('/regiter',async(req,res)=>{
-    //code
-})
+//Router
+app.use('/user',require('./router/userRouter'));
 
 //Listening to the server
 const PORT = 5000;

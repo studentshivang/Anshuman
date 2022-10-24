@@ -1,7 +1,8 @@
 const userCtrl = require("../controllers/userCtrl");
-const express=require(express);
-const Router=express().router;
+const router=require("express").Router();
 
-Router.post('/register',userCtrl.register);
+router.post('/register',userCtrl.register);
+router.get('/getusers',userCtrl.getUsers);
+router.post('/signin',userCtrl.signin);
 
-Router.get('/allusers',userCtrl.getUsers);
+module.exports = router;
