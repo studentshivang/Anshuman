@@ -54,15 +54,19 @@ const userCtrl = {
   },
   signin: async (req, res) => {
     try {
-      const { email, password } =req.body;
-      const users = await UserModel.findOne({ email });
-      console.log(users);
-        
-        res.status(200).json({
-          success: true,
-          msg: "Login successful",
-        });
-      
+      const { email, password } = req.body;
+      const user = await UserModel.findOne({ email });
+      // console.log(users);
+
+      if (!user) throw new Error("No user found!");
+      const result = await bcrypt.compare(password, user.password);
+      if (!result) throw new Error("Invalid credentials!");
+      //generate access token 
+      //store in the cookie
+      res.status(200).json({
+        success: true,
+        msg: "Login successful",
+      });
     } catch (error) {
       res.status(400).json({ success: false, msg: "Login failed!" });
       console.log(error);
